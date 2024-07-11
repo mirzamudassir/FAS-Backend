@@ -1,7 +1,6 @@
 const request = require('supertest');
-const { app, server, shutdownServer } = require('../app');
+const { app, server } = require('../app');
 const mongoose = require('mongoose');
-const Booking = require('../models/Booking');
 require('dotenv').config();
 
 // Mock db conn
@@ -34,7 +33,7 @@ describe('POST /api/bookings', () => {
       .expect(201);
 
     // expect(res.body).toHaveProperty('_id');
-    // expect(res.body.pickupLocation).toBe(bookingData.pickupLocation);
+    expect(res.body.pickupLocation).toBe(bookingData.pickupLocation);
   });
 
   it('should return 400 Bad Request if required fields are missing', async () => {

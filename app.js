@@ -7,7 +7,7 @@ require('dotenv').config();
 const bookingsRoute = require('./routes/bookings');
 const setupSwagger = require('./swagger');
 
-const app = express();
+var app = express();
 
 app.use(bodyParser.json());
 

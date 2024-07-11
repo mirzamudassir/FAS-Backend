@@ -1,9 +1,10 @@
 // eslint.config.js
 export default [
   {
-      rules: {
-          semi: "error",
-          "prefer-const": "error"
-      }
-  }
+    rules: {
+        eqeqeq: "off",
+        "no-unused-vars": "error",
+        "prefer-const": ["error", { "ignoreReadBeforeAssign": true }]
+    }
+}
 ];
