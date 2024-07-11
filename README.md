@@ -29,3 +29,13 @@ https://localhost:3000/api-docs
 ```
 http://localhost:3000/api/bookings
 ```
+
+## 7. Lint Code:
+```
+npm run lint
+```
+
+## 6. Format Code:
+```
+npm run format
+```
