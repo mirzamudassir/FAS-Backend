@@ -1,5 +1,5 @@
-const express = require('express');
-const Booking = require('../models/Booking');
+const express = require("express");
+const Booking = require("../models/Booking");
 
 const router = express.Router();
 
@@ -66,17 +66,23 @@ const router = express.Router();
  *         description: Internal server error
  */
 
-
-router.post('/bookings', async (req, res) => {
-  const { pickupLocation, dropoffLocation, vanType, deliveryTime, userId } = req.body;
+router.post("/bookings", async (req, res) => {
+  const { pickupLocation, dropoffLocation, vanType, deliveryTime, userId } =
+    req.body;
 
   // Validate input
-  if (!pickupLocation || !dropoffLocation || !vanType || !deliveryTime || !userId) {
-    return res.status(400).json({ error: 'All fields are required' });
+  if (
+    !pickupLocation ||
+    !dropoffLocation ||
+    !vanType ||
+    !deliveryTime ||
+    !userId
+  ) {
+    return res.status(400).json({ error: "All fields are required" });
   }
 
-  if (!['small', 'medium', 'large'].includes(vanType)) {
-    return res.status(400).json({ error: 'Invalid van type' });
+  if (!["small", "medium", "large"].includes(vanType)) {
+    return res.status(400).json({ error: "Invalid van type" });
   }
 
   try {
@@ -92,7 +98,7 @@ router.post('/bookings', async (req, res) => {
     await booking.save();
     res.status(201).json(booking);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create booking' });
+    res.status(500).json({ error: "Failed to create booking" });
   }
 });
 
