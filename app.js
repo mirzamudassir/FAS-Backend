@@ -1,11 +1,11 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-require("dotenv").config();
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+require('dotenv').config();
 
 //import route and swagger
-const bookingsRoute = require("./routes/bookings");
-const setupSwagger = require("./swagger");
+const bookingsRoute = require('./routes/bookings');
+const setupSwagger = require('./swagger');
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 mongoose.connect(process.env.MONGODB_CONN_STRING);
 
-app.use("/api", bookingsRoute);
+app.use('/api', bookingsRoute);
 
 //setup swagger
 setupSwagger(app);
