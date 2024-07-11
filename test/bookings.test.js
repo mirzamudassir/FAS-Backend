@@ -1,35 +1,34 @@
-const request = require('supertest');
-const { app, server, shutdownServer } = require('../app');
-const mongoose = require('mongoose');
-const Booking = require('../models/Booking');
-require('dotenv').config();
+const request = require("supertest");
+const { app, server, shutdownServer } = require("../app");
+const mongoose = require("mongoose");
+const Booking = require("../models/Booking");
+require("dotenv").config();
 
 // Mock db conn
 beforeAll(async () => {
   await mongoose.connect(process.env.MONGODB_CONN_STRING);
 });
 
-afterEach(async () => {
-  await Booking.deleteMany({});
-});
+// afterEach(async () => {
+//   await Booking.deleteMany({});
+// });
 
 afterAll(async () => {
-  await shutdownServer();
   await mongoose.connection.close();
 });
 
-describe('POST /api/bookings', () => {
-  it('should create a new booking', async () => {
+describe("POST /api/bookings", () => {
+  it("should create a new booking", async () => {
     const bookingData = {
-      pickupLocation: 'test case1 pickup',
-      dropoffLocation: 'test case1 drop',
-      vanType: 'medium',
-      deliveryTime: new Date(),
-      userId: 'user123',
+      pickupLocation: "test case1 pickup",
+      dropoffLocation: "test case2 pickup",
+      vanType: "medium",
+      deliveryTime: "2024-07-12T10:30:00.000Z",
+      userId: "60d0fe4f5311236168a109ca",
     };
 
     const res = await request(app)
-      .post('/api/bookings')
+      .post("/api/bookings")
       .send(bookingData)
       .expect(201);
 
@@ -37,37 +36,37 @@ describe('POST /api/bookings', () => {
     // expect(res.body.pickupLocation).toBe(bookingData.pickupLocation);
   });
 
-  it('should return 400 Bad Request if required fields are missing', async () => {
+  it("should return 400 Bad Request if required fields are missing", async () => {
     const invalidBookingData = {
       // Missing pickupLocation
-      dropoffLocation: 'test case1',
-      vanType: 'medium',
-      deliveryTime: new Date(),
-      userId: 'user123',
+      dropoffLocation: "123 Main St",
+      vanType: "medium",
+      deliveryTime: "2024-07-12T10:30:00.000Z",
+      userId: "60d0fe4f5311236168a109ca",
     };
 
     const res = await request(app)
-      .post('/api/bookings')
+      .post("/api/bookings")
       .send(invalidBookingData)
       .expect(400);
 
-    expect(res.body.error).toBe('All fields are required');
+    expect(res.body.error).toBe("All fields are required");
   });
 
-  it('should return 400 Bad Request if vanType is invalid', async () => {
+  it("should return 400 Bad Request if vanType is invalid", async () => {
     const invalidBookingData = {
-      pickupLocation: 'test case1',
-      dropoffLocation: 'test case1',
-      vanType: 'invalid', // Invalid vanType
-      deliveryTime: new Date(),
-      userId: 'user123',
+      pickupLocation: "123 Main St",
+      dropoffLocation: "456 Elm St",
+      vanType: "invalid", // Invalid vanType
+      deliveryTime: "2024-07-12T10:30:00.000Z",
+      userId: "60d0fe4f5311236168a109ca",
     };
 
     const res = await request(app)
-      .post('/api/bookings')
+      .post("/api/bookings")
       .send(invalidBookingData)
       .expect(400);
 
-    expect(res.body.error).toBe('Invalid van type');
+    expect(res.body.error).toBe("Invalid van type");
   });
 });
