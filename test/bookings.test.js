@@ -15,6 +15,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await mongoose.connection.close();
+  await server.close();
 });
 
 describe("POST /api/bookings", () => {
